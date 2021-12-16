@@ -1,9 +1,14 @@
 name: Release Charts
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Release branch'
+        required: true
+#  push:
+#    branches:
+#      - master
 
 jobs:
   release:
@@ -11,6 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: "${{ github.event.branch }}"
 
       - name: Fetch history
         run: git fetch --prune --unshallow
@@ -26,7 +33,7 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.0.0-rc.2
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+#      - name: Run chart-releaser
+#        uses: helm/chart-releaser-action@v1.2.1
+#        env:
+#          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
