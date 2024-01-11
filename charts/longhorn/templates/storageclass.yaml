@@ -29,6 +29,9 @@ data:
       {{- if .Values.persistence.migratable }}
       migratable: "{{ .Values.persistence.migratable }}"
       {{- end }}    
+      {{- if .Values.persistence.nfsOptions }}
+      nfsOptions: "{{ .Values.persistence.nfsOptions }}"
+      {{- end }}    
       {{- if .Values.persistence.backingImage.enable }}
       backingImage: {{ .Values.persistence.backingImage.name }}
       backingImageDataSourceType: {{ .Values.persistence.backingImage.dataSourceType }}
@@ -39,7 +42,6 @@ data:
       recurringJobSelector: '{{ .Values.persistence.recurringJobSelector.jobList }}'
       {{- end }}
       dataLocality: {{ .Values.persistence.defaultDataLocality | quote }}
-      replicaAutoBalance: {{ .Values.persistence.defaultReplicaAutoBalance | quote }}
       {{- if .Values.persistence.defaultNodeSelector.enable }}
       nodeSelector: "{{ .Values.persistence.defaultNodeSelector.selector }}"
       {{- end }}
